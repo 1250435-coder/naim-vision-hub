@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* NAIM Design System — Deep Navy + Gold corporate aesthetic */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Deep Navy Blue */
+    --primary: 222 65% 16%;
+    --primary-foreground: 45 90% 92%;
+    --primary-glow: 222 60% 28%;
+
+    --secondary: 220 30% 96%;
+    --secondary-foreground: 222 65% 16%;
+
+    --muted: 220 20% 96%;
+    --muted-foreground: 222 15% 45%;
+
+    /* Gold accent */
+    --accent: 42 75% 52%;
+    --accent-foreground: 222 65% 16%;
+    --accent-soft: 42 80% 88%;
+
+    --destructive: 0 75% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 20% 90%;
+    --input: 220 20% 90%;
+    --ring: 42 75% 52%;
+
+    --radius: 0.625rem;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(222 65% 12%) 0%, hsl(222 60% 22%) 60%, hsl(222 55% 32%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(42 80% 58%) 0%, hsl(38 85% 48%) 100%);
+    --gradient-overlay: linear-gradient(180deg, hsl(222 65% 12% / 0.85) 0%, hsl(222 65% 12% / 0.65) 100%);
+
+    /* Shadows */
+    --shadow-elegant: 0 20px 50px -20px hsl(222 65% 16% / 0.3);
+    --shadow-gold: 0 10px 30px -10px hsl(42 75% 52% / 0.4);
+    --shadow-card: 0 4px 20px -8px hsl(222 65% 16% / 0.12);
+
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * { @apply border-border; }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    @apply tracking-tight;
+  }
+}
+
+@layer utilities {
+  .bg-hero { background: var(--gradient-hero); }
+  .bg-gold { background: var(--gradient-gold); }
+  .bg-overlay { background: var(--gradient-overlay); }
+  .shadow-elegant { box-shadow: var(--shadow-elegant); }
+  .shadow-gold { box-shadow: var(--shadow-gold); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .text-gold { color: hsl(var(--accent)); }
+  .container-tight { @apply container max-w-6xl; }
+}
+
+@layer components {
+  .section-padding { @apply py-20 md:py-28; }
+}
