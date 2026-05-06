@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import naimLogo from "@/assets/naim-logo.png";
 
 const links = [
   { to: "/", label: "Home" },
@@ -20,9 +21,7 @@ export const Navbar = () => {
     <header className="sticky top-0 z-50 bg-background/85 backdrop-blur-md border-b border-border">
       <div className="container-tight flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-md bg-hero grid place-items-center shadow-gold">
-            <span className="font-display text-base font-black text-gold">N</span>
-          </div>
+          <img src={naimLogo} alt="NAIM USIM Logo" className="h-10 w-10 rounded-full object-cover" />
           <div className="leading-tight">
             <div className="font-display text-lg font-bold text-primary">NAIM USIM OFFICIAL</div>
             <div className="text-[10px] tracking-widest text-muted-foreground uppercase">Mahasiswa Kelantan</div>
