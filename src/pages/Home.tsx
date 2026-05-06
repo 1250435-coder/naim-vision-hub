@@ -3,14 +3,42 @@ import { ArrowRight, Award, Users, Sparkles, Calendar, Target } from "lucide-rea
 import { Button } from "@/components/ui/button";
 import hero from "@/assets/hero-students.jpg";
 import festival from "@/assets/festival-banner.jpg";
-import { products } from "@/data/products";
+import { products as staticProducts } from "@/data/products";
+import { useEffect, useState } from "react";
+import { db } from "@/lib/firebase";
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 
 const Home = () => {
+  const [products, setProducts] = useState(staticProducts as any[]);
+  const [settings, setSettings] = useState({
+    heroTitle: "Empowering Kelantan Students Towards Excellence.",
+    heroSubtitle: "We unite, develop and elevate the next generation of Kelantanese leaders through programs, community and opportunity.",
+    heroImage: "",
+    statsMembers: "5,000+",
+    statsPrograms: "120+",
+    statsChapters: "30+",
+    statsYears: "15",
+  });
+
+  useEffect(() => {
+    // Load products from Firebase
+    getDocs(collection(db, "products")).then(snap => {
+      if (!snap.empty) setProducts(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    });
+
+    // Load site settings from Firebase
+    getDoc(doc(db, "settings", "site")).then(d => {
+      if (d.exists()) setSettings(s => ({ ...s, ...d.data() }));
+    });
+  }, []);
+
+  const heroImg = settings.heroImage || hero;
+
   return (
     <>
       {/* HERO */}
       <section className="relative min-h-[88vh] flex items-center overflow-hidden">
-        <img src={hero} alt="NAIM students" className="absolute inset-0 h-full w-full object-cover" width={1920} height={1280} />
+        <img src={heroImg} alt="NAIM students" className="absolute inset-0 h-full w-full object-cover" width={1920} height={1280} />
         <div className="absolute inset-0 bg-overlay" />
         <div className="relative container-tight py-24 grid md:grid-cols-12 gap-8 items-center">
           <div className="md:col-span-8 text-primary-foreground">
@@ -18,10 +46,10 @@ const Home = () => {
               <span className="h-px w-8 bg-accent" /> Persatuan Mahasiswa Kelantan
             </span>
             <h1 className="font-display text-5xl md:text-7xl font-black leading-[1.05] mb-6">
-              Empowering Kelantan Students <span className="text-gold">Towards Excellence.</span>
+              {settings.heroTitle}
             </h1>
             <p className="text-lg md:text-xl text-primary-foreground/85 max-w-2xl mb-10 leading-relaxed">
-              We unite, develop and elevate the next generation of Kelantanese leaders through programs, community and opportunity.
+              {settings.heroSubtitle}
             </p>
             <div className="flex flex-wrap gap-4">
               <Button asChild size="lg" className="bg-gold text-accent-foreground hover:opacity-90 shadow-gold font-semibold">
@@ -39,10 +67,10 @@ const Home = () => {
       <section className="bg-primary text-primary-foreground">
         <div className="container-tight grid grid-cols-2 md:grid-cols-4 gap-8 py-12">
           {[
-            { n: "5,000+", l: "Active Members" },
-            { n: "120+", l: "Annual Programs" },
-            { n: "30+", l: "University Chapters" },
-            { n: "15", l: "Years of Service" },
+            { n: settings.statsMembers, l: "Active Members" },
+            { n: settings.statsPrograms, l: "Annual Programs" },
+            { n: settings.statsChapters, l: "University Chapters" },
+            { n: settings.statsYears, l: "Years of Service" },
           ].map((s) => (
             <div key={s.l} className="text-center">
               <div className="font-display text-3xl md:text-4xl font-black text-gold">{s.n}</div>
